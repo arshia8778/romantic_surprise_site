@@ -3,3 +3,277 @@
 @media(max-width:600px){.nav{height:60px;padding-inline:15px}.brand{font-size:12px}.nav-link{font-size:10px}.section{padding-inline:18px}.hero{padding-top:82px;padding-bottom:75px}.hero-art{height:280px}.rose-card{width:205px;height:265px}.orbit-a{width:min(88vw,330px);height:220px}.orbit-b{width:min(74vw,275px);height:300px}.hero h1{font-size:clamp(28px,8vw,36px);line-height:1.6;letter-spacing:-.5px}.hero-subtitle{font-size:12px;line-height:2.1}.hero-actions{gap:8px}.button{width:auto;max-width:100%;font-size:11px;padding:10px 12px}.tiny-note{font-size:9px}.little-things{padding-top:65px;padding-bottom:60px}.section-heading h2,.finale h2{font-size:clamp(26px,7vw,34px)}.section-heading p{font-size:11px}.quote-section{padding-top:65px;padding-bottom:70px}.quote-section blockquote{font-size:clamp(20px,5.7vw,27px);line-height:1.95}.quote-foot{font-size:11px}.letter-section{padding-top:20px;padding-bottom:65px}.letter-wrap{border-radius:18px}.letter-top{padding:18px}.letter-content{padding:22px 19px 18px}.letter-content p{font-size:12px;line-height:2.2}.letter-content .letter-hi{font-size:16px}.letter-seal{position:static;margin:0 19px 18px auto;width:32px;height:32px}.finale{padding-top:50px;padding-bottom:65px}.finale-content>p{font-size:11px}.toast{font-size:11px}}
 @media(max-width:360px){.nav-link{font-size:9px}.brand{font-size:11px}.hero-actions{flex-direction:column;align-items:stretch}.hero-actions .button{width:100%}.hero-art{height:255px}.rose-card{width:185px;height:240px}.heart-a{right:3%}.heart-b{left:2%}.letter-top{padding:15px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}.petal{display:none!important}}
+
+
+
+/* ===== اصلاح نمایش موبایل و جلوگیری از اسکرول افقی ===== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  overflow-x: clip;
+  position: relative;
+}
+
+main,
+section,
+nav,
+footer {
+  max-width: 100%;
+  min-width: 0;
+}
+
+img,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* لایه‌های تزئینی نباید عرض صفحه را زیاد کنند */
+.grain,
+.ambient,
+#stars {
+  pointer-events: none;
+}
+
+.grain,
+.ambient {
+  position: fixed;
+  max-width: 100vw;
+}
+
+#stars {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* محتوای اصلی بالاتر از پس‌زمینه */
+.nav,
+main,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+.nav {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* عناصر تزئینی نباید باعث بیرون‌زدگی افقی شوند */
+.hero,
+.hero-copy,
+.hero-art,
+.little-things,
+.quote-section,
+.letter-section,
+.finale,
+.section-heading,
+.memory-grid,
+.memory-card,
+.letter-wrap,
+.finale-content {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.hero-copy,
+.hero-art,
+.section-heading,
+.memory-card,
+.letter-wrap,
+.finale-content {
+  overflow-wrap: anywhere;
+}
+
+/* گلبرگ‌ها و قلب‌های متحرک */
+.petal {
+  position: fixed !important;
+  z-index: 20;
+  top: -30px;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation-name: mobile-petal-fall !important;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes mobile-petal-fall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(var(--drift, 0px), 110vh, 0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ===== تنظیمات مخصوص گوشی ===== */
+@media (max-width: 600px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .nav {
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 12px;
+  }
+
+  .nav-link {
+    white-space: nowrap;
+  }
+
+  .hero {
+    width: 100%;
+    padding-left: 18px;
+    padding-right: 18px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-copy,
+  .hero-art {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-subtitle {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .hero-actions .button {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .hero-art {
+    transform: scale(0.9);
+    transform-origin: center top;
+    margin-bottom: -20px;
+  }
+
+  .section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .memory-grid {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .memory-card {
+    width: 100%;
+  }
+
+  .quote-section blockquote,
+  .quote-foot,
+  .letter-content p,
+  .finale-content p {
+    overflow-wrap: anywhere;
+  }
+
+  .letter-wrap {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .letter-content {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  footer {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    text-align: center;
+  }
+}
+
+/* گوشی‌های خیلی باریک */
+@media (max-width: 360px) {
+  .nav {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .nav-link {
+    font-size: 12px;
+  }
+
+  .hero,
+  .section {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .hero-art {
+    transform: scale(0.82);
+    margin-bottom: -35px;
+  }
+
+  .hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+  }
+}
+
+/* احترام به تنظیم کاهش حرکت دستگاه */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .petal {
+    animation: none !important;
+  }
+}
